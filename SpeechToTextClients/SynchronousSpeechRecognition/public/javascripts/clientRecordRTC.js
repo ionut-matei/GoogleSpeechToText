@@ -47,7 +47,7 @@ function initRecording() {
 			// Dialogflow / STT requires mono audio
 			numberOfAudioChannels: 1,
 
-			timeSlice: 2000,
+			timeSlice: 5000,
 
 			ondataavailable: async function (blob) {
 				console.log("Speech chunk ready")

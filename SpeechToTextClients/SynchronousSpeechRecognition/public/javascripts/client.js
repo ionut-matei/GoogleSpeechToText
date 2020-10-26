@@ -1,6 +1,6 @@
 
 
-let bufferSize = 2048,
+let bufferSize = 4096,
 	AudioContext,
 	context,
 	processor,
@@ -53,6 +53,34 @@ function initRecording() {
 function microphoneProcess(e) {
 	var left = e.inputBuffer.getChannelData(0);
 	var left16 = downsampleBuffer(left, 44100, 16000)
+
+	try {
+		//const buf = await blob.arrayBuffer();
+		//await connection.invoke("ProcessSpeech", buf);
+		debugger
+		const data = new FormData();
+		data.append('speechBlob', left16);
+
+
+		
+		axios.post("http://localhost:5000/api/processSpeech", data)
+		.then(function(response){
+
+			let resultText = document.getElementById('ResultText')
+
+			if(response.data[0])
+			{
+				let newSpan = document.createElement('span');
+				newSpan.innerHTML = response.data[0];
+
+				resultText.lastElementChild.appendChild(newSpan);
+				resultText.lastElementChild.appendChild(document.createTextNode('\u002E\u00A0'));
+			}
+			console.log(response)
+		})
+	} catch (err) {
+		console.error(err);
+	}
 	//send it to server
 }
 
@@ -66,8 +94,8 @@ var endButton = document.getElementById("stopRecButton");
 endButton.addEventListener("click", stopRecording);
 endButton.disabled = true;
 
-var sendMessasgeButton = document.getElementById("sendMessageButton");
-sendMessasgeButton.addEventListener("click", sendMessage);
+// var sendMessasgeButton = document.getElementById("sendMessageButton");
+// sendMessasgeButton.addEventListener("click", sendMessage);
 
 var recordingStatus = document.getElementById("recordingStatus");
 
@@ -144,37 +172,37 @@ var downsampleBuffer = function (buffer, sampleRate, outSampleRate) {
 	return result.buffer;
 }
 
-//SignalR 
-const connection = new signalR.HubConnectionBuilder()
-    .withUrl("http://localhost:5000/speechToText")
-    .configureLogging(signalR.LogLevel.Information)
-    .build();
+// //SignalR 
+// const connection = new signalR.HubConnectionBuilder()
+//     .withUrl("http://localhost:5000/speechToText")
+//     .configureLogging(signalR.LogLevel.Information)
+//     .build();
 
-async function start() {
-    try {
-        await connection.start();
-        console.log("SignalR Connected.");
-    } catch (err) {
-        console.log(err);
-        setTimeout(start, 5000);
-    }
-};
+// async function start() {
+//     try {
+//         await connection.start();
+//         console.log("SignalR Connected.");
+//     } catch (err) {
+//         console.log(err);
+//         setTimeout(start, 5000);
+//     }
+// };
 
-connection.onclose(start);
+// connection.onclose(start);
 
-async function sendMessage(){
-	try {
-		await connection.invoke("SendMessage", "user", "message");
-	} catch (err) {
-		console.error(err);
-	}
-}
+// async function sendMessage(){
+// 	try {
+// 		await connection.invoke("SendMessage", "user", "message");
+// 	} catch (err) {
+// 		console.error(err);
+// 	}
+// }
 
-connection.on("ReceiveMessage", (user, message) => {
-    const li = document.createElement("li");
-    li.textContent = `${user}: ${message}`;
-    document.getElementById("messageList").appendChild(li);
-});
+// connection.on("ReceiveMessage", (user, message) => {
+//     const li = document.createElement("li");
+//     li.textContent = `${user}: ${message}`;
+//     document.getElementById("messageList").appendChild(li);
+// });
 
-// Start the connection.
-start();
+// // Start the connection.
+// start();

@@ -14,7 +14,7 @@ namespace SpeechToTextService.Controllers
         [HttpPost]
         public async Task<List<string>> ProcessSpeech(IFormFile speechBlob)
         {
-            
+
             var speech = SpeechClient.Create();
             var response = speech.Recognize(new RecognitionConfig()
             {
@@ -30,12 +30,38 @@ namespace SpeechToTextService.Controllers
                 foreach (var alternative in result.Alternatives)
                 {
                     transcripts.Add(alternative.Transcript);
-                    
+
                 }
             }
 
             return await Task.FromResult(transcripts);
         }
+        //[Route("api/processSpeech")]
+        //[HttpPost]
+        //public async Task<List<string>> ProcessSpeech([FromForm] byte[] speechBlob)
+        //{
+
+        //    var speech = SpeechClient.Create();
+        //    var response = speech.Recognize(new RecognitionConfig()
+        //    {
+        //        Encoding = RecognitionConfig.Types.AudioEncoding.Linear16,
+        //        SampleRateHertz = 16000,
+        //        LanguageCode = "ro",
+        //    }, RecognitionAudio.FromBytes(speechBlob));
+
+        //    var transcripts = new List<string>();
+
+        //    foreach (var result in response.Results)
+        //    {
+        //        foreach (var alternative in result.Alternatives)
+        //        {
+        //            transcripts.Add(alternative.Transcript);
+
+        //        }
+        //    }
+
+        //    return await Task.FromResult(transcripts);
+        //}
 
         [Route("api/get")]
         [HttpGet]
