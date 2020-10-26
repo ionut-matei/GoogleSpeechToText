@@ -1,0 +1,17 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/.idea
+*/**/bin
+*/**/obj
+**/packages
+*/**/*.csproj.user
+/start.bat
+/obj/Docker
+*/**/appsettings.Development.json
+*/**/SpeechToTextDemo-b65137933bd7.json
+/obj
+*.user
+*.suo

@@ -1,5 +1,3 @@
-'use strict'
-
 
 //connection to socket
 const socket = io.connect();
@@ -29,7 +27,7 @@ const constraints = {
 };
 
 //================= RECORDING =================
-function initRecording2() {
+function initRecording() {
 	socket.emit('startGoogleCloudStream', ''); //init socket Google Speech Connection
 	streamStreaming = true;
 	AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -56,7 +54,7 @@ function initRecording2() {
 
 }
 
-function initRecording() {
+function initRecording2() {
 	socket.emit('startGoogleCloudStream', ''); //init socket Google Speech Connection
 	streamStreaming = true;
 	

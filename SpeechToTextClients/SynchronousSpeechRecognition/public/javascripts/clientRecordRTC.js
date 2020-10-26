@@ -1,6 +1,4 @@
 
-
-
 let bufferSize = 2048,
 	context,
 	processor,
@@ -14,14 +12,10 @@ let finalWord = false,
 	removeLastSentence = true,
 	streamStreaming = false;
 
-
-
 const constraints = {
 	audio: true,
 	video: false
 };
-
-
 
 //interface
 var startButton = document.getElementById("startRecButton");
@@ -53,7 +47,7 @@ function initRecording() {
 			// Dialogflow / STT requires mono audio
 			numberOfAudioChannels: 1,
 
-			timeSlice: 1000,
+			timeSlice: 2000,
 
 			ondataavailable: async function (blob) {
 				console.log("Speech chunk ready")
@@ -65,19 +59,6 @@ function initRecording() {
 					const data = new FormData();
 					data.append('speechBlob', blob);
 
-					// axios({
-					// 	method: "POST",
-					// 	url: "http://localhost:5000/api/processSpeech",
-					// 	data: data,
-					// 	headers: {
-					// 		'Content-Type': `multipart/form-data; boundary=boundry`,
-					// 	},
-					// 	headers: {
-					// 		'Access-Control-Allow-Origin': '*',
-					// 		'Content-type': 'application/json',
-					// 	},
-					// 	crossDomain: true
-					// })
 					axios.post("http://localhost:5000/api/processSpeech", data)
 					.then(function(response){
 

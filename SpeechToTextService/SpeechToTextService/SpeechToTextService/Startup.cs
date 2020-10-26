@@ -15,7 +15,7 @@ namespace SpeechToTextService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddSignalR();
+            ///services.AddSignalR();
             services.AddControllers();
             services.AddProblemDetails();
         }
@@ -45,7 +45,7 @@ namespace SpeechToTextService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<SpeechToTextHub>("/speechToText");
+                //endpoints.MapHub<SpeechToTextHub>("/speechToText");
                 endpoints.MapControllers();
             });
         }

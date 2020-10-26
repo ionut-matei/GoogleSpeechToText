@@ -4,7 +4,7 @@ Synchronuous Google Speech Recognition
 
 ## Run Local
 4. run `npm install`
-5. run `npm run watch:dev` or with nodemon: `nodemon app`
+5. run `npm run watch:dev` or `npm run dev`
 6. go to `http://127.0.0.1:3000/`
 
 
