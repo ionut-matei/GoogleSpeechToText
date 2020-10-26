@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alex\\Desktop\\SignalR-samples\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj": {}
+    "C:\\Users\\Alex\\Desktop\\SpeechToText\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alex\\Desktop\\SignalR-samples\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj": {
+    "C:\\Users\\Alex\\Desktop\\SpeechToText\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\Desktop\\SignalR-samples\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\Desktop\\SpeechToText\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj",
         "projectName": "SpeechToTextService",
-        "projectPath": "C:\\Users\\Alex\\Desktop\\SignalR-samples\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj",
+        "projectPath": "C:\\Users\\Alex\\Desktop\\SpeechToText\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\Desktop\\SignalR-samples\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\Desktop\\SpeechToText\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

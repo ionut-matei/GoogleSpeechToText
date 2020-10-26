@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "koYjEGa5WW2dboOaWeT1O5heK9nReQlwUnQ3u2iADN/yXYLdBF+QcpnLA0BbsX3I2nhhlH8Tk+EaUsS0Kqzfaw==",
+  "dgSpecHash": "zIoKS6zLVB35sxb8MioeiU3Fu2cYdQ+EMhOfxalsRLdE4IK3TTw+0t8DPyqFStLHKOTMnLFByVa3hQHPSrOd8Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Alex\\Desktop\\SignalR-samples\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj",
+  "projectFilePath": "C:\\Users\\Alex\\Desktop\\SpeechToText\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService\\SpeechToTextService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alex\\.nuget\\packages\\google.api.commonprotos\\2.0.0\\google.api.commonprotos.2.0.0.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\google.api.gax\\3.0.0\\google.api.gax.3.0.0.nupkg.sha512",
