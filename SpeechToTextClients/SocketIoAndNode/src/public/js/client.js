@@ -1,4 +1,4 @@
-
+"use strict"
 //connection to socket
 const socket = io.connect();
 
@@ -68,10 +68,11 @@ function initRecording2() {
 			desiredSampRate: 16000,
 		 
 			recorderType: StereoAudioRecorder,
-			// Dialogflow / STT requires mono audio
+			
+			// STT requires mono audio
 			numberOfAudioChannels: 1,
 
-			timeSlice: 300,
+			timeSlice: 3000,
 
 			ondataavailable: async function (blob) {
 				console.log("Speech chunk ready")
@@ -88,12 +89,11 @@ function initRecording2() {
 	};
 
 	var onErrorCallback = function(error){
-		debugger
+	
 		console.error(JSON.stringify(error));
 	}
 
-	navigator.getUserMedia({ audio: true }, onSuccessCallback, onErrorCallback)
-
+	navigator.mediaDevices.getUserMedia({ audio: true }, onSuccessCallback, onErrorCallback)
 
 }
 
@@ -169,7 +169,7 @@ socket.on('speechData', function (data) {
 	let transcript = data.results[0].alternatives[0].transcript;
 
 	if (dataFinal === false) {
-		// console.log(resultText.lastElementChild);
+	
 		if (removeLastSentence) { resultText.lastElementChild.remove(); }
 		removeLastSentence = true;
 
@@ -200,9 +200,8 @@ window.onbeforeunload = function () {
 	if (streamStreaming) { socket.emit('endGoogleCloudStream', ''); }
 };
 
-//================= SANTAS HELPERS =================
 
-// sampleRateHertz 16000 //saved sound is awefull
+// sampleRateHertz 16000 
 function convertFloat32ToInt16(buffer) {
 	let l = buffer.length;
 	let buf = new Int16Array(l / 3);

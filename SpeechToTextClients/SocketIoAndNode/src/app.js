@@ -101,7 +101,7 @@ const request = {
     enableAutomaticPunctuation: true
 
     // speechContexts: [{
-    //     phrases: ["hoful","shwazil"]
+    //     phrases: ["diagnistic","medicamente", "analize"]
     //    }] // add your own speech context for better recognition
   },
   interimResults: true, // If you want interim results, set this to true
