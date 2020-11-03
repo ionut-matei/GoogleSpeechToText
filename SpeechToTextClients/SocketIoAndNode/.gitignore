@@ -1,8 +1,4 @@
-src/node_modules
-src/pathToYourJson.json
-src/package-lock.json
-.env
+/node_modules
 src/.DS_Store
-src/.env
 .DS_Store
-*.json
+**/*.suo
