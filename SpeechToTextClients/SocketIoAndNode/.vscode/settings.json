@@ -1,0 +1,7 @@
+{
+    "appService.deploySubpath": ".",
+    "appService.defaultWebAppToDeploy": "/subscriptions/87b99104-b8a5-4967-a05a-2fa3c4295710/resourceGroups/SPEECHTOTEXT_DEMO_RG/providers/Microsoft.Web/sites/speechtotext-demo"
+    // "appService.defaultWebAppToDeploy": "/subscriptions/87b99104-b8a5-4967-a05a-2fa3c4295710/resourceGroups/SPEECHTOTEXT_DEMO_RG/providers/Microsoft.Web/sites/speechtotext-demo",
+    // "appService.deploySubpath": "."
+    
+}

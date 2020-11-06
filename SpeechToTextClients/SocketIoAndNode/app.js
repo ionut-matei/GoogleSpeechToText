@@ -3,30 +3,21 @@
 const express = require('express'); // const bodyParser = require('body-parser'); // const path = require('path');
 const environmentVars = require('dotenv').config();
 
-// Google Cloud
 const speech = require('@google-cloud/speech');
 const speechClient = new speech.SpeechClient(); // Creates a client
 
 const app = express();
-const port = process.env.PORT || 1337;
+
+console.log("------------- process.env.PORT: " + process.env.PORT)
+
+let port = process.env.PORT || 80;
+
+console.log("------------- port: " + port)
+
+app.set('port', port)
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server);
-
-app.use('/assets', express.static(__dirname + '/public'));
-app.use('/session/assets', express.static(__dirname + '/public'));
-//app.set('view engine', 'html');
-
-// =========================== ROUTERS ================================ //
-
-app.get('/', function (req, res) {
-  //res.sendFile('./public/index.html');
-  res.sendFile('./public/index.html', { root: __dirname });
-});
-
-app.use('/', function (req, res, next) {
-  next();
-});
 
 // =========================== SOCKET.IO ================================ //
 
@@ -42,11 +33,11 @@ io.on('connection', function (client) {
     client.emit('broad', data);
   });
 
-  client.on('startGoogleCloudStream', function (data) {
+  client.on('startCloudStream', function (data) {
     startRecognitionStream(this, data);
   });
 
-  client.on('endGoogleCloudStream', function () {
+  client.on('endCloudStream', function () {
     stopRecognitionStream();
   });
 
@@ -82,8 +73,7 @@ io.on('connection', function (client) {
   }
 });
 
-
-// =========================== GOOGLE CLOUD SETTINGS ================================ //
+// =========================== Speech recognition SETTINGS ================================ //
 
 // The encoding of the audio file
 const encoding = 'LINEAR16';
@@ -96,7 +86,7 @@ const request = {
     encoding: encoding,
     sampleRateHertz: sampleRateHertz,
     languageCode: languageCode,
-    profanityFilter: false,
+    profanityFilter: true,
     enableWordTimeOffsets: true,
     enableAutomaticPunctuation: true
 
@@ -109,7 +99,22 @@ const request = {
 
 // =========================== START SERVER ================================ //
 
-server.listen(port, '127.0.0.1', function () {
+app.use('/assets', express.static(__dirname + '/public'));
+app.use('/session/assets', express.static(__dirname + '/public'));
+//app.set('view engine', 'html');
+
+// =========================== ROUTERS ================================ //
+
+app.get('/', function (req, res) {
+  //res.sendFile('./public/index.html');
+  res.sendFile('./public/index.html', { root: __dirname });
+});
+
+app.use('/', function (req, res, next) {
+  next();
+});
+
+server.listen(port, function () {
   //http listen, to make socket work
   // app.address = "127.0.0.1";
   console.log('Server started on port:' + port);

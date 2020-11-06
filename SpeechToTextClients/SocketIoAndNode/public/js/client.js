@@ -17,6 +17,7 @@ let audioElement = document.querySelector('audio'),
 	finalWord = false,
 	resultText = document.getElementById('ResultText'),
 	removeLastSentence = true,
+	addNewLine = true,
 	streamStreaming = false;
 
 
@@ -28,7 +29,7 @@ const constraints = {
 
 //================= RECORDING =================
 function initRecording() {
-	socket.emit('startGoogleCloudStream', ''); //init socket Google Speech Connection
+	socket.emit('startCloudStream', ''); //init socket Speech Connection
 	streamStreaming = true;
 	AudioContext = window.AudioContext || window.webkitAudioContext;
 	context = new AudioContext({
@@ -55,7 +56,7 @@ function initRecording() {
 }
 
 function initRecording2() {
-	socket.emit('startGoogleCloudStream', ''); //init socket Google Speech Connection
+	socket.emit('startCloudStream', ''); //init socket Speech Connection
 	streamStreaming = true;
 	
 	var onSuccessCallback = function (audioStream) {
@@ -108,13 +109,34 @@ function microphoneProcess(e) {
 //================= INTERFACE =================
 var startButton = document.getElementById("startRecButton");
 startButton.addEventListener("click", startRecording);
+//startButton.addEventListener("click", emitNonFinal);
 
 var endButton = document.getElementById("stopRecButton");
 endButton.addEventListener("click", stopRecording);
+//endButton.addEventListener("click", emitFinal);
 endButton.disabled = true;
 
 var recordingStatus = document.getElementById("recordingStatus");
 
+function emitNonFinal(){
+	onSpeechData({
+		results: [{
+			isFinal: false,
+			alternatives: [{transcript: "Test de test"}]
+		}]
+	})
+}
+
+function emitFinal(){
+	//$( "#ResultText" ).html( "Next Step..." )
+
+	onSpeechData({
+		results: [{
+			isFinal: true,
+			alternatives: [{transcript: "Test de test final"}]
+		}]
+	})
+}
 
 function startRecording() {
 	startButton.disabled = true;
@@ -135,21 +157,26 @@ function stopRecording() {
 			console.log("Audio recording stopped")
 		})
 	}
-	socket.emit('endGoogleCloudStream', '');
+	socket.emit('endCloudStream', '');
 
+	if(globalStream)
+	{
+		let track = globalStream.getTracks()[0];
+		track.stop();
 
-	// let track = globalStream.getTracks()[0];
-	// track.stop();
-
-	// input.disconnect(processor);
-	// processor.disconnect(context.destination);
-	// context.close().then(function () {
-	// 	input = null;
-	// 	processor = null;
-	// 	context = null;
-	// 	AudioContext = null;
-	// 	startButton.disabled = false;
-	// });
+		if(input)
+		{
+			input.disconnect(processor);
+		}
+		processor.disconnect(context.destination);
+		context.close().then(function () {
+			input = null;
+			processor = null;
+			context = null;
+			AudioContext = null;
+			startButton.disabled = false;
+		});
+	}
 }
 
 //================= SOCKET IO =================
@@ -163,7 +190,9 @@ socket.on('messages', function (data) {
 });
 
 
-socket.on('speechData', function (data) {
+socket.on('speechData', onSpeechData);
+
+function onSpeechData(data){
 	
 	var dataFinal = undefined || data.results[0].isFinal;
 	let transcript = data.results[0].alternatives[0].transcript;
@@ -172,32 +201,37 @@ socket.on('speechData', function (data) {
 	
 		if (removeLastSentence) { resultText.lastElementChild.remove(); }
 		removeLastSentence = true;
-
+		
 		//add empty span
-		let empty = document.createElement('span');
+		let empty = document.createElement('p');
 		resultText.appendChild(empty);
 		resultText.lastElementChild.appendChild(document.createTextNode(transcript));
 		resultText.lastElementChild.appendChild(document.createTextNode('\u00A0'));
+		//resultText.appendChild(document.createElement('br'));
 
-	} else if (dataFinal === true) {
+	} 
+	else if (dataFinal === true) {
 		resultText.lastElementChild.remove();
 
 		//add empty span
-		let empty = document.createElement('span');
+		let empty = document.createElement('p');
+
 		resultText.appendChild(empty);
 		resultText.lastElementChild.appendChild(document.createTextNode(transcript));
 		resultText.lastElementChild.appendChild(document.createTextNode('\u00A0'));
 
-		console.log("Google Speech sent 'final' Sentence.");
+		//resultText.appendChild(document.createElement('br'));
+
+		console.log("Speech service sent 'final' Sentence.");
 		finalWord = true;
 		endButton.disabled = false;
 
 		removeLastSentence = false;
 	}
-});
+}
 
 window.onbeforeunload = function () {
-	if (streamStreaming) { socket.emit('endGoogleCloudStream', ''); }
+	if (streamStreaming) { socket.emit('endCloudStream', ''); }
 };
 
 
